@@ -15,7 +15,7 @@ CREATE TABLE Proprietario (
     UNIQUE (CadastroProprietario, EmailProprietario, TelefoneProprietario)
 );
 
-CREATE TABLE Veículo (
+CREATE TABLE Veiculo (
     IdVeiculo INT IDENTITY(1,1) PRIMARY KEY,
     ChassiVeiculo VARCHAR(17) NOT NULL,
     ModeloVeiculo VARCHAR(45),
