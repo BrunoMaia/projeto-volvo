@@ -18,7 +18,7 @@ namespace Projeto___Concessionaria.Models
         public decimal ValorVeiculo { get; set; }
         public int KmVeiculo { get; set; }
         public string? AcessoriosVeiculo { get; set; }
-        public decimal VersaoSistVeiculo { get; set; }
+        public decimal VersaoSistVeiculo { get; set; } = null!;
 
         public virtual ICollection<Vendum> Venda { get; set; }
     }
