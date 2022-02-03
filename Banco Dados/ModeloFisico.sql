@@ -45,7 +45,6 @@ CREATE TABLE Vendas (
     IdVendas INT IDENTITY(1,1) PRIMARY KEY,
     MatriculaVendedor INT,
     IdVeiculo INT FOREIGN KEY REFERENCES Veiculo(IdVeiculo),
-    QuantidadeVendas INT,
     DataVendas DATE,
     IdProprietario INT FOREIGN KEY REFERENCES Proprietario(IdProprietario)
 );
