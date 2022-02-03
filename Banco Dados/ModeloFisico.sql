@@ -1,5 +1,7 @@
 CREATE DATABASE Rede_Concessionaria;
+go
 USE Rede_Concessionaria;
+go
 
 CREATE TABLE Proprietario (
     IdProprietario INT IDENTITY(1,1) PRIMARY KEY,
