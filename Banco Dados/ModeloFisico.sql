@@ -22,7 +22,6 @@ CREATE TABLE Veículo (
     KmVeiculo INT NOT NULL,
     AcessoriosVeiculo VARCHAR(90),
     VersaoSistVeiculo DECIMAL(5,3) NOT NULL,
-    IdProprietario INT FOREIGN KEY REFERENCES Proprietario(IdProprietario),
     UNIQUE (ChassiVeiculo)
 );
 
