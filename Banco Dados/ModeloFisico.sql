@@ -1,61 +1,49 @@
 CREATE TABLE Proprietario (
-    IdProprietario INTEGER PRIMARY KEY,
-    NomeProprietario CHAR,
-    CadastroProprietario CHAR,
-    EnderecoProprietarioCidade CHAR,
-    EnderecoProprietarioBairro CHAR,
-    EnderecoProprietarioLogradouro CHAR,
-    EnderecoProprietarioComplemento CHAR,
-    EnderecoProprietarioNumero INTEGER,
-    EmailProprietario CHAR,
-    TelefoneProprietario CHAR,
-    UNIQUE (IdProprietario, CadastroProprietario, EmailProprietario, TelefoneProprietario)
+    IdProprietario INT IDENTITY(1,1) PRIMARY KEY,
+    NomeProprietario VARCHAR(45) NOT NULL,
+    CadastroProprietario VARCHAR(14) NOT NULL,
+    EnderecoProprietarioCidade VARCHAR(45),
+    EnderecoProprietarioBairro VARCHAR(45),
+    EnderecoProprietarioLogradouro VARCHAR(45),
+    EnderecoProprietarioComplemento VARCHAR(45),
+    EnderecoProprietarioNumero INT,
+    EmailProprietario VARCHAR(45),
+    TelefoneProprietario VARCHAR(20),
+    UNIQUE (CadastroProprietario, EmailProprietario, TelefoneProprietario)
 );
 
 CREATE TABLE Veículo (
-    IdVeiculo INTEGER PRIMARY KEY,
-    ChassiVeiculo CHAR,
-    ModeloVeiculo CHAR,
-    AnoVeiculo INTEGER,
-    CorVeiculo CHAR,
-    ValorVeiculo DECIMAL,
-    KmVeiculo INTEGER,
-    AcessoriosVeiculo CHAR,
-    VersaoSistVeiculo DECIMAL,
-    IdProprietario INTEGER,
-    UNIQUE (IdVeiculo, ChassiVeiculo)
+    IdVeiculo INT IDENTITY(1,1) PRIMARY KEY,
+    ChassiVeiculo VARCHAR(17) NOT NULL,
+    ModeloVeiculo VARCHAR(45),
+    AnoVeiculo INT,
+    CorVeiculo VARCHAR(45),
+    ValorVeiculo DECIMAL(20,2),
+    KmVeiculo INT NOT NULL,
+    AcessoriosVeiculo VARCHAR(90),
+    VersaoSistVeiculo DECIMAL(5,3) NOT NULL,
+    IdProprietario INT FOREIGN KEY REFERENCES Proprietario(IdProprietario),
+    UNIQUE (ChassiVeiculo)
 );
 
 CREATE TABLE Vendedor (
-    MatriculaVendedor INTEGER PRIMARY KEY,
-    NomeVendedor CHAR,
-    CpfVendedor CHAR,
-    EmailVendedor CHAR,
-    TelefoneVendedor CHAR,
+    MatriculaVendedor INT IDENTITY(1,1) PRIMARY KEY,
+    NomeVendedor VARCHAR(45),
+    CpfVendedor VARCHAR(13) NOT NULL ,
+    EmailVendedor VARCHAR(45)NOT NULL,
+    TelefoneVendedor VARCHAR(20) NOT NULL,
     AdmissaoVendedor DATE,
-    VendasMesVendedor INTEGER,
-    VendasTotalVendedor INTEGER,
-    SalarioVendedor DECIMAL,
+    VendasMesVendedor INT,
+    VendasTotalVendedor INT,
+    SalarioVendedor DECIMAL(20,2),
     UNIQUE (MatriculaVendedor, CpfVendedor, EmailVendedor, TelefoneVendedor)
 );
 
 CREATE TABLE Vendas (
-    IdVendas INTEGER PRIMARY KEY UNIQUE,
-    MatriculaVendedor INTEGER,
-    IdVeiculo INTEGER,
-    QuantidadeVendas INTEGER,
-    DataVendas CHAR,
-    IdProprietario INTEGER
+    IdVendas INT IDENTITY(1,1) PRIMARY KEY,
+    MatriculaVendedor INT,
+    IdVeiculo INT FOREIGN KEY REFERENCES Veiculo(IdVeiculo),
+    QuantidadeVendas INT,
+    DataVendas DATE,
+    IdProprietario INT FOREIGN KEY REFERENCES Proprietario(IdProprietario)
 );
- 
-ALTER TABLE Veículo ADD CONSTRAINT FK_Veículo_3
-    FOREIGN KEY (IdProprietario???)
-    REFERENCES ??? (???);
- 
-ALTER TABLE Vendas ADD CONSTRAINT FK_Vendas_3
-    FOREIGN KEY (MatriculaVendedor???, IdVeiculo???, IdProprietario???)
-    REFERENCES ??? (???);
- 
-ALTER TABLE Vendas ADD CONSTRAINT FK_Vendas_4
-    FOREIGN KEY (DataVendas, ???)
-    REFERENCES Proprietario (TelefoneProprietario, ???);
