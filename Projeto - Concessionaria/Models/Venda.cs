@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Projeto___Concessionaria.Models
 {
-    public partial class Vendum
+    public partial class Venda
     {
         public int IdVendas { get; set; }
         public int MatriculaVendedor { get; set; }
