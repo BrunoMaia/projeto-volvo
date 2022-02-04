@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Projeto___Concessionaria.Models
+namespace RedeConcessionaria.Models
 {
     public partial class Veiculo
     {
         public Veiculo()
         {
-            Venda = new HashSet<Vendum>();
+            Venda = new HashSet<Venda>();
         }
 
         public int IdVeiculo { get; set; }
@@ -20,6 +20,6 @@ namespace Projeto___Concessionaria.Models
         public string? AcessoriosVeiculo { get; set; }
         public decimal VersaoSistVeiculo { get; set; } = null!;
 
-        public virtual ICollection<Vendum> Venda { get; set; }
+        public virtual ICollection<Venda> Venda { get; set; }
     }
 }

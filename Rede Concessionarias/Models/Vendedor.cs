@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Projeto___Concessionaria.Models
+namespace RedeConcessionaria.Models
 {
     public partial class Vendedor
     {
         public Vendedor()
         {
-            Venda = new HashSet<Vendum>();
+            Venda = new HashSet<Venda>();
         }
 
         public int MatriculaVendedor { get; set; }
@@ -20,6 +20,6 @@ namespace Projeto___Concessionaria.Models
         public int VendasTotalVendedor { get; set; }
         public decimal SalarioVendedor { get; set; }
 
-        public virtual ICollection<Vendum> Venda { get; set; }
+        public virtual ICollection<Venda> Vendas { get; set; }
     }
 }
