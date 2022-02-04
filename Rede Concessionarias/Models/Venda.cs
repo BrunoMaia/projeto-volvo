@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Projeto___Concessionaria.Models
+namespace RedeConcessionaria.Models
 {
     public partial class Venda
     {
