@@ -17,7 +17,7 @@ namespace RedeConcessionarias.Models
         {
         
                 optionBuilder.UseSqlServer(
-                @"Server = .\; Database = RedeConcessionarias; Trusted_Connection = true;");
+                @"Server = .\; Database = RedeConcessionaria; Trusted_Connection = True;");
         }
     }
 }
