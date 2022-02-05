@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedeConcessionarias.Models;
 
@@ -11,9 +12,10 @@ using RedeConcessionarias.Models;
 namespace RedeConcessionarias.Migrations
 {
     [DbContext(typeof(RedeConcessionariaContext))]
-    partial class RedeConcessionariaContextModelSnapshot : ModelSnapshot
+    [Migration("20220205024242_changes")]
+    partial class changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,7 +110,7 @@ namespace RedeConcessionarias.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVendas"), 1L, 1);
 
-                    b.Property<int>("ClienteIdCliente")
+                    b.Property<int?>("ClienteIdCliente")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataVenda")
@@ -120,13 +122,13 @@ namespace RedeConcessionarias.Migrations
                     b.Property<int?>("IdVeiculo")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MatriculaVendedor")
+                    b.Property<int>("MatriculaVendedor")
                         .HasColumnType("int");
 
-                    b.Property<int>("VeiculoIdVeiculo")
+                    b.Property<int?>("VeiculoIdVeiculo")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendedorMatriculaVendedor")
+                    b.Property<int?>("VendedorMatriculaVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdVendas");
@@ -181,21 +183,15 @@ namespace RedeConcessionarias.Migrations
                 {
                     b.HasOne("RedeConcessionarias.Models.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteIdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClienteIdCliente");
 
                     b.HasOne("RedeConcessionarias.Models.Veiculo", "Veiculo")
                         .WithMany()
-                        .HasForeignKey("VeiculoIdVeiculo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VeiculoIdVeiculo");
 
                     b.HasOne("RedeConcessionarias.Models.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("VendedorMatriculaVendedor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VendedorMatriculaVendedor");
 
                     b.Navigation("Cliente");
 

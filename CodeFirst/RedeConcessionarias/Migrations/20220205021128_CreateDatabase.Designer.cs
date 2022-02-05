@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedeConcessionarias.Models;
 
@@ -11,9 +12,10 @@ using RedeConcessionarias.Models;
 namespace RedeConcessionarias.Migrations
 {
     [DbContext(typeof(RedeConcessionariaContext))]
-    partial class RedeConcessionariaContextModelSnapshot : ModelSnapshot
+    [Migration("20220205021128_CreateDatabase")]
+    partial class CreateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,34 +110,34 @@ namespace RedeConcessionarias.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVendas"), 1L, 1);
 
-                    b.Property<int>("ClienteIdCliente")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdCliente")
+                    b.Property<int>("IdCliente")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdVeiculo")
+                    b.Property<int>("IdClienteNavigationIdCliente")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MatriculaVendedor")
+                    b.Property<int>("IdVeiculo")
                         .HasColumnType("int");
 
-                    b.Property<int>("VeiculoIdVeiculo")
+                    b.Property<int>("IdVeiculoNavigationIdVeiculo")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendedorMatriculaVendedor")
+                    b.Property<int>("MatriculaVendedor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MatriculaVendedorNavigationMatriculaVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdVendas");
 
-                    b.HasIndex("ClienteIdCliente");
+                    b.HasIndex("IdClienteNavigationIdCliente");
 
-                    b.HasIndex("VeiculoIdVeiculo");
+                    b.HasIndex("IdVeiculoNavigationIdVeiculo");
 
-                    b.HasIndex("VendedorMatriculaVendedor");
+                    b.HasIndex("MatriculaVendedorNavigationMatriculaVendedor");
 
                     b.ToTable("Vendas");
                 });
@@ -179,29 +181,29 @@ namespace RedeConcessionarias.Migrations
 
             modelBuilder.Entity("RedeConcessionarias.Models.Venda", b =>
                 {
-                    b.HasOne("RedeConcessionarias.Models.Cliente", "Cliente")
+                    b.HasOne("RedeConcessionarias.Models.Cliente", "IdClienteNavigation")
                         .WithMany()
-                        .HasForeignKey("ClienteIdCliente")
+                        .HasForeignKey("IdClienteNavigationIdCliente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RedeConcessionarias.Models.Veiculo", "Veiculo")
+                    b.HasOne("RedeConcessionarias.Models.Veiculo", "IdVeiculoNavigation")
                         .WithMany()
-                        .HasForeignKey("VeiculoIdVeiculo")
+                        .HasForeignKey("IdVeiculoNavigationIdVeiculo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RedeConcessionarias.Models.Vendedor", "Vendedor")
+                    b.HasOne("RedeConcessionarias.Models.Vendedor", "MatriculaVendedorNavigation")
                         .WithMany()
-                        .HasForeignKey("VendedorMatriculaVendedor")
+                        .HasForeignKey("MatriculaVendedorNavigationMatriculaVendedor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.Navigation("IdClienteNavigation");
 
-                    b.Navigation("Veiculo");
+                    b.Navigation("IdVeiculoNavigation");
 
-                    b.Navigation("Vendedor");
+                    b.Navigation("MatriculaVendedorNavigation");
                 });
 #pragma warning restore 612, 618
         }
