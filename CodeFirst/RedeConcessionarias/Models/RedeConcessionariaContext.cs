@@ -1,11 +1,15 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 
-
 namespace RedeConcessionarias.Models
 {
     public class RedeConcessionariaContext : DbContext
     {
+
+        public RedeConcessionariaContext()
+        {
+            
+        }
 
         
         public  DbSet<Cliente> Clientes { get; set; } = null!;
@@ -17,7 +21,7 @@ namespace RedeConcessionarias.Models
         {
         
                 optionBuilder.UseSqlServer(
-                @"Server = .\; Database = RedeConcessionarias; Trusted_Connection = true;");
+                @"Server = .\; Database = RedeConcessionaria; Trusted_Connection = True;");
         }
     }
 }

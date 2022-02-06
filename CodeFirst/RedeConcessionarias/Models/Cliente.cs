@@ -9,34 +9,18 @@ namespace RedeConcessionarias.Models
         
         [Key]
         public int IdCliente { get; set; }
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(45)]
-        public string NomeCliente { get; set; } = null!;
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(14)]
-        public string CadastroCliente { get; set; } = null!;
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(45)]
-        public string EmailCliente { get; set; } = null!;
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(15)]
-        public string TelefoneCliente { get; set; } = null!;
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(45)]
-        public string EnderecoClienteCidade { get; set; } = null!;
-
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(45)]
-        public string EnderecoClienteBairro { get; set; } = null!;
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        [StringLength(45)]
-        public string EnderecoClienteLogradouro { get; set; } = null!;
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        public int EnderecoClienteNumero { get; set; }
-        [Required(ErrorMessage="Campo obrigatório!!")]
-        public int CEPCLliente {get;set;}
+        public string? NomeCliente { get; set; } 
+        [MaxLength(14),MinLength(11)]
+        public string? CadastroCliente { get; set; } 
+        public string? EmailCliente { get; set; } 
+        public string? TelefoneCliente { get; set; } 
+        public string? EnderecoClienteCidade { get; set; } 
+        public string? EnderecoClienteBairro { get; set; } 
+        public string? EnderecoClienteLogradouro { get; set; } 
+        public int? EnderecoClienteNumero { get; set; }
         public string? EnderecoClienteComplemento { get; set; }
+        
+        //public ICollection<Venda>? Vendas { get; set; }
 
-        public virtual ICollection<Venda> Venda { get; set; } = null!;
     }
 }

@@ -9,15 +9,24 @@ namespace RedeConcessionarias.Models
        
         [Key]
         public int MatriculaVendedor { get; set; }
-        public string NomeVendedor { get; set; } = null!;
-        public string CpfVendedor { get; set; } = null!;
-        public string EmailVendedor { get; set; } = null!;
-        public string TelefoneVendedor { get; set; } = null!;
+
+        public string? NomeVendedor { get; set; } 
+
+        public string? CpfVendedor { get; set; } 
+
+        public string? EmailVendedor { get; set; } 
+
+        public string? TelefoneVendedor { get; set; } 
+
         public DateTime AdmissaoVendedor { get; set; }
+
         public int VendasMesVendedor { get; set; }
+
         public int VendasTotalVendedor { get; set; }
+
         public decimal SalarioVendedor { get; set; }
 
-        public virtual ICollection<Venda> Vendas { get; set; } = null!;
+       // public ICollection<Venda>? Vendas { get; set; }
+
     }
 }
