@@ -1,11 +1,15 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 
-
 namespace RedeConcessionarias.Models
 {
     public class RedeConcessionariaContext : DbContext
     {
+
+        public RedeConcessionariaContext()
+        {
+            
+        }
 
         
         public  DbSet<Cliente> Clientes { get; set; } = null!;

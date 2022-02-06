@@ -12,7 +12,7 @@ using RedeConcessionarias.Models;
 namespace RedeConcessionarias.Migrations
 {
     [DbContext(typeof(RedeConcessionariaContext))]
-    [Migration("20220205012136_AlteraDb")]
+    [Migration("20220205232206_AlteraDb")]
     partial class AlteraDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,49 +32,33 @@ namespace RedeConcessionarias.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCliente"), 1L, 1);
 
-                    b.Property<int>("CEPCLliente")
-                        .HasColumnType("int");
-
                     b.Property<string>("CadastroCliente")
-                        .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
                     b.Property<string>("EmailCliente")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EnderecoClienteBairro")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EnderecoClienteCidade")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EnderecoClienteComplemento")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EnderecoClienteLogradouro")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EnderecoClienteNumero")
+                    b.Property<int?>("EnderecoClienteNumero")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeCliente")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TelefoneCliente")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdCliente");
 
@@ -96,18 +80,15 @@ namespace RedeConcessionarias.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ChassiVeiculo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CorVeiculo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KmVeiculo")
                         .HasColumnType("int");
 
                     b.Property<string>("ModeloVeiculo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ValorVeiculo")
@@ -129,34 +110,25 @@ namespace RedeConcessionarias.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVendas"), 1L, 1);
 
+                    b.Property<int?>("ClienteIdCliente")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCliente")
+                    b.Property<int?>("VeiculoIdVeiculo")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdClienteNavigationIdCliente")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdVeiculo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdVeiculoNavigationIdVeiculo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MatriculaVendedor")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MatriculaVendedorNavigationMatriculaVendedor")
+                    b.Property<int?>("VendedorMatriculaVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdVendas");
 
-                    b.HasIndex("IdClienteNavigationIdCliente");
+                    b.HasIndex("ClienteIdCliente");
 
-                    b.HasIndex("IdVeiculoNavigationIdVeiculo");
+                    b.HasIndex("VeiculoIdVeiculo");
 
-                    b.HasIndex("MatriculaVendedorNavigationMatriculaVendedor");
+                    b.HasIndex("VendedorMatriculaVendedor");
 
                     b.ToTable("Vendas");
                 });
@@ -173,22 +145,18 @@ namespace RedeConcessionarias.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CpfVendedor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailVendedor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NomeVendedor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("SalarioVendedor")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TelefoneVendedor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VendasMesVendedor")
@@ -204,44 +172,23 @@ namespace RedeConcessionarias.Migrations
 
             modelBuilder.Entity("RedeConcessionarias.Models.Venda", b =>
                 {
-                    b.HasOne("RedeConcessionarias.Models.Cliente", "IdClienteNavigation")
-                        .WithMany("Venda")
-                        .HasForeignKey("IdClienteNavigationIdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RedeConcessionarias.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteIdCliente");
 
-                    b.HasOne("RedeConcessionarias.Models.Veiculo", "IdVeiculoNavigation")
-                        .WithMany("Venda")
-                        .HasForeignKey("IdVeiculoNavigationIdVeiculo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RedeConcessionarias.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoIdVeiculo");
 
-                    b.HasOne("RedeConcessionarias.Models.Vendedor", "MatriculaVendedorNavigation")
-                        .WithMany("Vendas")
-                        .HasForeignKey("MatriculaVendedorNavigationMatriculaVendedor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RedeConcessionarias.Models.Vendedor", "Vendedor")
+                        .WithMany()
+                        .HasForeignKey("VendedorMatriculaVendedor");
 
-                    b.Navigation("IdClienteNavigation");
+                    b.Navigation("Cliente");
 
-                    b.Navigation("IdVeiculoNavigation");
+                    b.Navigation("Veiculo");
 
-                    b.Navigation("MatriculaVendedorNavigation");
-                });
-
-            modelBuilder.Entity("RedeConcessionarias.Models.Cliente", b =>
-                {
-                    b.Navigation("Venda");
-                });
-
-            modelBuilder.Entity("RedeConcessionarias.Models.Veiculo", b =>
-                {
-                    b.Navigation("Venda");
-                });
-
-            modelBuilder.Entity("RedeConcessionarias.Models.Vendedor", b =>
-                {
-                    b.Navigation("Vendas");
+                    b.Navigation("Vendedor");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,6 +19,8 @@ namespace RedeConcessionarias.Models
         public string? EnderecoClienteLogradouro { get; set; } 
         public int? EnderecoClienteNumero { get; set; }
         public string? EnderecoClienteComplemento { get; set; }
+        
+        //public ICollection<Venda>? Vendas { get; set; }
 
     }
 }
