@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedeConcessionarias.Models;
 
@@ -11,9 +12,10 @@ using RedeConcessionarias.Models;
 namespace RedeConcessionarias.Migrations
 {
     [DbContext(typeof(RedeConcessionariaContext))]
-    partial class RedeConcessionariaContextModelSnapshot : ModelSnapshot
+    [Migration("20220206234747_teste3")]
+    partial class teste3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
