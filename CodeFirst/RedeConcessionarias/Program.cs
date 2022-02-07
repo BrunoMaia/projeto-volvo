@@ -46,7 +46,7 @@ int MenuInicial(){
         return 0;
     }
     else{
-        System.Console.WriteLine("Oção não encontrada");
+        System.Console.WriteLine("Opção não encontrada");
         MenuInicial();
         return 0;
     }

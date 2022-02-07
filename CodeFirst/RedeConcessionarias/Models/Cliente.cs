@@ -4,14 +4,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RedeConcessionarias.Models
 {
+    
     public class Cliente
     {
+        public Cliente()
+        {
+            
+        }
+
+       
         
-        [Key]
-        public int IdCliente { get; set; }
+        
+        public int ClienteId { get; set; }
         public string? NomeCliente { get; set; } 
-        [MaxLength(14),MinLength(11)]
+        [MinLength(11,ErrorMessage = "Dados em tamanho inválido."),MaxLength(14,ErrorMessage = "Dados em tamanho inválido.")]
+        
         public string? CadastroCliente { get; set; } 
+        
+        [EmailAddress(ErrorMessage = "E-mail inválido.")] 
         public string? EmailCliente { get; set; } 
         public string? TelefoneCliente { get; set; } 
         public string? EnderecoClienteCidade { get; set; } 

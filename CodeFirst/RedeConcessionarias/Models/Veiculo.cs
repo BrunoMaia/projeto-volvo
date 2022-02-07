@@ -6,9 +6,14 @@ namespace RedeConcessionarias.Models
 {
     public class Veiculo
     {
+
+        public Veiculo()
+        {
+            
+        }
       
         [Key]
-        public int IdVeiculo { get; set; }
+        public int VeiculoId { get; set; }
 
         public string? ChassiVeiculo { get; set; } 
 
@@ -18,6 +23,7 @@ namespace RedeConcessionarias.Models
 
         public string? CorVeiculo { get; set; }
 
+        [Required]
         public decimal ValorVeiculo { get; set; }
 
         public int KmVeiculo { get; set; }

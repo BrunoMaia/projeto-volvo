@@ -11,7 +11,6 @@ namespace RedeConcessionarias.Models
             
         }
 
-        
         public  DbSet<Cliente> Clientes { get; set; } = null!;
         public  DbSet<Veiculo> Veiculos { get; set; } = null!;
         public  DbSet<Vendedor> Vendedores { get; set; } = null!;
