@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using RedeConcessionarias.Models;
 using RedeConcessionarias.Log;
+using System.Linq;
 
 namespace RedeConcessionarias.Controllers
 {
@@ -23,7 +25,29 @@ namespace RedeConcessionarias.Controllers
                     return StatusCode(500,"Erro no Servidor");
                 }
         }
+
+        [HttpGet("vendasId")]
+        public IActionResult GetVendasClientes(int ClienteId) { //Lista as vendas que o cliente participou por seu Id
+                try{
+                    using(var _context = new RedeConcessionariaContext()){
+
+                        var cliente = _context.Clientes.Include(x => x.Vendas).FirstOrDefault(c=>c.ClienteId == ClienteId);
+                    if(cliente == null){
+                        return StatusCode(404,"Cliente não encontrado");
+                    }
+                    
+                    return Ok(cliente);
+                    
+                    }
+                }
+                catch (Exception ex){
+                    Logger.AdicionaLog(ex.Message,1,"GetTodosClientes");
+                    return StatusCode(500,"Erro no Servidor");
+                }
+        }
             
+
+
         [HttpGet("byId/{ClienteId}")] // Busca o cliente pelo Id
         public IActionResult GetClientesById(int ClienteId){
             try{

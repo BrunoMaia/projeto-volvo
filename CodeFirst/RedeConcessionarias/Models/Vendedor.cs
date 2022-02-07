@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace RedeConcessionarias.Models
 {
@@ -9,6 +11,11 @@ namespace RedeConcessionarias.Models
 
         public Vendedor()
         {
+            this.Vendas = new Collection<Venda>();
+            this.VendasMesVendedor = 0;
+            this.SalarioVendedor = 1212;
+            this.DestaqueVendedor = false;
+            this.BonusDestaqueVendedor = 0;
         }
        
         [Key]
@@ -26,13 +33,14 @@ namespace RedeConcessionarias.Models
         [DisplayFormat(DataFormatString = "dd/mm/yyyy")]
         public DateTime AdmissaoVendedor { get; set; }
 
-        public int VendasMesVendedor { get; set; }
+        public double VendasMesVendedor { get; set; }
 
-        public int VendasTotalVendedor { get; set; }
+        public double SalarioVendedor { get; set; }
+        public bool? DestaqueVendedor { get; set; }
 
-        public decimal SalarioVendedor { get; set; }
+        public double BonusDestaqueVendedor { get; set; }
 
-       // public ICollection<Venda>? Vendas { get; set; }
+       public ICollection<Venda>? Vendas { get; set; }
 
     }
 }

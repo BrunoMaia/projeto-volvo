@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace RedeConcessionarias.Models
 {
@@ -9,7 +11,7 @@ namespace RedeConcessionarias.Models
 
         public Veiculo()
         {
-            
+            Vendas = new Collection<Venda>();
         }
       
         [Key]
@@ -24,7 +26,7 @@ namespace RedeConcessionarias.Models
         public string? CorVeiculo { get; set; }
 
         [Required]
-        public decimal ValorVeiculo { get; set; }
+        public double ValorVeiculo { get; set; }
 
         public int KmVeiculo { get; set; }
 
@@ -32,7 +34,7 @@ namespace RedeConcessionarias.Models
 
         public decimal VersaoSistVeiculo { get; set; } 
 
-        //public ICollection<Venda>? Vendas { get; set; }
+        public ICollection<Venda>? Vendas { get; set; }
 
     }
 }
