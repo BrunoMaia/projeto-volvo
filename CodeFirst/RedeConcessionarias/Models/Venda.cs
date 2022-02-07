@@ -6,15 +6,30 @@ namespace RedeConcessionarias.Models
 {
     public class Venda
     {
+        public Venda()
+        {
+            
+        }
+
+
         [Key]
-        public int IdVendas { get; set; }
-        //public int MatriculaVendedor { get; set; }
+        public int VendasId { get; set; }
+
+        public int VendedorId { get; set; }
+
         public Vendedor? Vendedor { get; set; } 
-        //public int IdVeiculo { get; set; }
+
+        public int VeiculoId { get; set; }
         public Veiculo? Veiculo { get; set; } 
-        //public int IdCliente { get; set; }
+
+        public int ClienteId  { get; set; }
+        
         public Cliente? Cliente { get; set; } 
+
+        [DisplayFormat(DataFormatString = "dd/mm/yyyy")]
         public DateTime DataVenda { get; set; }
+
+        public double ValorVenda {get;set;}
 
     }
 }

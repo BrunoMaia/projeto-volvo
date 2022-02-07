@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace RedeConcessionarias.Models
 {
     public class Veiculo
     {
+
+        public Veiculo()
+        {
+            Vendas = new Collection<Venda>();
+        }
       
         [Key]
-        public int IdVeiculo { get; set; }
+        public int VeiculoId { get; set; }
 
         public string? ChassiVeiculo { get; set; } 
 
@@ -18,7 +25,8 @@ namespace RedeConcessionarias.Models
 
         public string? CorVeiculo { get; set; }
 
-        public decimal ValorVeiculo { get; set; }
+        [Required]
+        public double ValorVeiculo { get; set; }
 
         public int KmVeiculo { get; set; }
 
@@ -26,7 +34,7 @@ namespace RedeConcessionarias.Models
 
         public decimal VersaoSistVeiculo { get; set; } 
 
-        //public ICollection<Venda>? Vendas { get; set; }
+        public ICollection<Venda>? Vendas { get; set; }
 
     }
 }
