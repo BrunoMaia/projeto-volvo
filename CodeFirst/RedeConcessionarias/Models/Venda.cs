@@ -11,7 +11,6 @@ namespace RedeConcessionarias.Models
             
         }
 
-       // (IsUnique = true)
 
         [Key]
         public int VendasId { get; set; }
@@ -25,11 +24,12 @@ namespace RedeConcessionarias.Models
 
         public int ClienteId  { get; set; }
         
-        //[ForeignKey("IdCliente")]
         public Cliente? Cliente { get; set; } 
 
         [DisplayFormat(DataFormatString = "dd/mm/yyyy")]
         public DateTime DataVenda { get; set; }
+
+        public double ValorVenda {get;set;}
 
     }
 }

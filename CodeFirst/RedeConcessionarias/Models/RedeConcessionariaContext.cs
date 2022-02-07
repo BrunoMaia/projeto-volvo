@@ -1,5 +1,5 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace RedeConcessionarias.Models
 {

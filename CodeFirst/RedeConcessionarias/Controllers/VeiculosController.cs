@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using RedeConcessionarias.Models;
 using RedeConcessionarias.Log;
-
+using System.Linq;
 
 namespace RedeConcessionarias.Controllers
 {
@@ -33,6 +34,26 @@ namespace RedeConcessionarias.Controllers
             }
             
         }
+
+        [HttpGet("vendasId")]
+        public IActionResult GetVendasVeiculos (int VeiculoId) { //Lista a venda que o veiculo participou por seu Id
+                try{
+                    using(var _context = new RedeConcessionariaContext()){
+
+                        var veiculo = _context.Veiculos.Include(x => x.Vendas).FirstOrDefault(c=>c.VeiculoId == VeiculoId);
+                    if(veiculo == null){
+                        return StatusCode(404,"Veículo não encontrado");
+                    }
+                    
+                    return Ok(veiculo);
+                    //
+                    }
+                }
+                catch (Exception ex){
+                    Logger.AdicionaLog(ex.Message,1,"GetTodosVeiculos");
+                    return StatusCode(500,"Erro no Servidor");
+                }
+        }
     
         
         [HttpGet("byId/{VeiculoId}")] // Busca o veiculo pelo Id
@@ -59,28 +80,49 @@ namespace RedeConcessionarias.Controllers
             }
         }
 
-        [HttpGet("byChassiVeiculo/{ChassiVeiculo}")] // Busca o veiculo pelo Chassi
-        public IActionResult getVeiculoByChassi(string ChassiVeiculo)
+        [HttpGet("ListVeiculosKM/")] // Lista os veículos pela sua quilometragem
+        public IActionResult getListVeiculoByKm()
         {
+
             try
             {
+                
                 using(var _context = new RedeConcessionariaContext())
                 {
-
-                    var veiculo = _context.Veiculos.FirstOrDefault(v=>v.ChassiVeiculo == ChassiVeiculo);
-                    if(veiculo == null)
-                    {
-                        return NotFound("Veículo não encontrado");
-                    }
-                    return Ok(veiculo);
+                    return Ok(_context.Veiculos.OrderBy (v => v.KmVeiculo).ToList());
                 }
+            
             }
+
             catch (Exception ex)
             {
                 Logger.AdicionaLog(ex.Message,1,"PostCliente");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
+
+        
+        [HttpGet("ListVeiculosVS/")] // Lista os veículos pela versão do sistema
+        public IActionResult getListVeiculoByVS()
+        {
+
+            try
+            {
+                
+                using(var _context = new RedeConcessionariaContext())
+                {
+                    return Ok(_context.Veiculos.OrderBy (v => v.VersaoSistVeiculo).ToList());
+                }
+            
+            }
+
+            catch (Exception ex)
+            {
+                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                return StatusCode(500,"Erro no Servidor");
+            }
+        }
+
         [HttpPost]
         public IActionResult PostVeiculo([FromBody] Veiculo veiculo) //Cadastra o veiculo no banco de dados
         {

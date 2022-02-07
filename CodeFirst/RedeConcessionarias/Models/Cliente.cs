@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace RedeConcessionarias.Models
 {
@@ -9,11 +11,9 @@ namespace RedeConcessionarias.Models
     {
         public Cliente()
         {
-            
+            Vendas = new Collection<Venda>();
         }
 
-       
-        
         
         public int ClienteId { get; set; }
         public string? NomeCliente { get; set; } 
@@ -30,7 +30,7 @@ namespace RedeConcessionarias.Models
         public int? EnderecoClienteNumero { get; set; }
         public string? EnderecoClienteComplemento { get; set; }
         
-        //public ICollection<Venda>? Vendas { get; set; }
+        public ICollection<Venda> Vendas { get; set; }
 
     }
 }

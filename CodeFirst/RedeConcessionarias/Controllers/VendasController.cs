@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using RedeConcessionarias.Models;
 using RedeConcessionarias.Log;
-
+using System.Linq;
 
 
 
@@ -64,7 +65,7 @@ namespace RedeConcessionarias.Controllers
 
 
         [HttpPost]
-        public IActionResult PostVenda([FromBody] Venda venda) //Cadastra a venda no banco de dados
+        public  IActionResult PostVenda([FromBody] Venda venda) //Cadastra a venda no banco de dados
         {
             try
             {
@@ -72,9 +73,27 @@ namespace RedeConcessionarias.Controllers
                 {
                     _context.Vendas.Update(venda);
                     _context.SaveChanges();
+               
+
+                   var valor =  (from va in _context.Veiculos 
+					            join vb in _context.Vendas
+					            on va.VeiculoId equals vb.VeiculoId
+					            where vb.VendasId == (from venda in _context.Vendas select venda.VendasId).Max()
+					            select new {valornegocio = va.ValorVeiculo}).Select(t => t.valornegocio);
+
+                    Venda vendazerado = _context.Vendas.Single(v => v.VendasId == venda.VendasId);
+                    vendazerado.ValorVenda = valor.First();
+
+                    Vendedor vendedor = _context.Vendedores.Where(n => n.VendedorId == venda.VendedorId).First();
+                    Veiculo veiculo = _context.Veiculos.Where(n => n.VeiculoId == venda.VeiculoId).First();
+                    Cliente cliente = _context.Clientes.Where(n => n.ClienteId == venda.ClienteId).First();
+
+                    vendedor.VendasMesVendedor += valor.First();
+                    vendedor.SalarioVendedor += valor.First()*0.01; 
+                        
+                    _context.SaveChanges();
                     return Ok(venda);
-                    
-                }
+               }
                 
             }
             catch (Exception ex)
@@ -82,7 +101,6 @@ namespace RedeConcessionarias.Controllers
                 Logger.AdicionaLog(ex.Message,1,"PostCliente");
                 return StatusCode(500,"Erro no Servidor");
             }
-            
         }
 
         [HttpPut("{VendasId}")]
@@ -123,10 +141,12 @@ namespace RedeConcessionarias.Controllers
                     {
                         return BadRequest("Venda não localizada.");
                     }
+
                         _context.Vendas.Remove(entity);
                         _context.SaveChanges();
                         return Ok("Venda removida.");
                 }
+            
             }
             catch (Exception ex)
             {

@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using RedeConcessionarias.Models;
 using RedeConcessionarias.Log;
-
+using System.Linq;
 
 namespace RedeConcessionarias.Controllers
 {
@@ -56,6 +57,26 @@ namespace RedeConcessionarias.Controllers
                 return StatusCode(500,"Erro no Servidor");
             }
             
+        }
+
+        [HttpGet("vendasId")]
+        public IActionResult GetVendasVendedor (int VendedorId) { //Lista a venda que o veiculo participou por seu Id
+                try{
+                    using(var _context = new RedeConcessionariaContext()){
+
+                        var vendedor = _context.Vendedores.Include(x => x.Vendas).FirstOrDefault(c=>c.VendedorId == VendedorId);
+                    if(vendedor == null){
+                        return StatusCode(404,"Vendedor não encontrado");
+                    }
+                    
+                    return Ok(vendedor);
+                    //
+                    }
+                }
+                catch (Exception ex){
+                    Logger.AdicionaLog(ex.Message,1,"GetTodosVendedores");
+                    return StatusCode(500,"Erro no Servidor");
+                }
         }
 
         [HttpGet("byCpfVendedor/{CpfVendedor}")]
@@ -131,8 +152,8 @@ namespace RedeConcessionarias.Controllers
         [HttpDelete("{VendedorId}")]
         public IActionResult DeleteVendedor(int VendedorId)
         {
-            try
-            {
+           try
+           {
                 using(var _context = new RedeConcessionariaContext())
                 {
                     var entity = _context.Vendedores.Find(VendedorId);
@@ -147,10 +168,11 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
-                return StatusCode(500,"Erro no Servidor");
+               Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                    return StatusCode(500,"Erro no Servidor");
             }
-        
         }
+        
     }
+
 }
