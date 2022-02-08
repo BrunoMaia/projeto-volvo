@@ -1,65 +1,45 @@
 using RedeConcessionarias.Log;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System;
+using System.Globalization;
+using RedeConcessionarias.configurador;
 
-void IniciaWebApi(){
-    try{
-    var builder = WebApplication.CreateBuilder(args);
-    builder.Services.AddControllers().AddJsonOptions(x =>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    var app = builder.Build();
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
-    app.UseHttpsRedirection();
-    app.UseAuthorization();
-    app.MapControllers();
-    app.Run();
-    }
-    catch(Exception ex){
-    Logger.AdicionaLog(ex.Message,4,"IniciaWebApi","Erro ao criar builder do WebApi");
-    }
-}
-
-bool ConfiguraSalarioMinimo(){
-    System.Console.WriteLine("Fará a configuração");
-    return true;
-}
-
-int MenuInicial(){
-    System.Console.WriteLine("Bem vindo ao Sistema de Gestão de Concessionárias!\nO que gostaria de fazer?\n[1] Carregar a API\n[2] Configurar o salário mínimo\n[3] Sair");
-    var resposta = Convert.ToInt32(Console.ReadLine());
-    if (resposta == 1){
-        IniciaWebApi();
-        return 0;
-    }
-    else if(resposta == 2){
-        if (ConfiguraSalarioMinimo()){
-            MenuInicial();
+class Program{
+    static void Main(string[] args) {  
+        var arquivo = @".\config.json";
+        if ((args.Length > 0) && (args[0] == "config")){
+            System.Console.WriteLine("Entrando no modo de configuração\n--------------------------------\n");
+            if (Config.DefineSalario(arquivo)){
+                System.Console.WriteLine("Configuração Feita!\n--------------------------------\n");
+            }
         }
-        return 1;
-    }
-    else if(resposta == 3){
-        return 0;
-    }
-    else{
-        System.Console.WriteLine("Opção não encontrada");
-        MenuInicial();
-        return 0;
+            
+    try{
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddControllers().AddJsonOptions(x =>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        var app = builder.Build();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        app.UseHttpsRedirection();
+        app.UseAuthorization();
+        app.MapControllers();
+        app.Run();
+        }
+        catch(Exception ex){
+        Logger.AdicionaLog(ex.Message,4,"IniciaWebApi","Erro ao criar builder do WebApi");
+        }
     }
 }
 
-try{
-    MenuInicial();
-}
-catch(Exception ex){
-    Logger.AdicionaLog(ex.Message,4,"","Erro ao iniciar o menu de opções");
-}
+
 
 
 
