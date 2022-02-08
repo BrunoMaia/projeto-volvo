@@ -29,7 +29,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetTodosVeiculos");
                 return StatusCode(500,"Erro no Servidor");
             }
             
@@ -50,14 +50,14 @@ namespace RedeConcessionarias.Controllers
                     }
                 }
                 catch (Exception ex){
-                    Logger.AdicionaLog(ex.Message,1,"GetTodosVeiculos");
+                    Logger.AdicionaLog(ex.Message,1,"GetVendasVeiculos");
                     return StatusCode(500,"Erro no Servidor");
                 }
         }
     
         
         [HttpGet("byId/{VeiculoId}")] // Busca o veiculo pelo Id
-        public IActionResult getVeiculosById(int VeiculoId)
+        public IActionResult GetVeiculosById(int VeiculoId)
         {
             try
             {
@@ -75,13 +75,13 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetVeiculosById");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
 
         [HttpGet("ListVeiculosKM/")] // Lista os veículos pela sua quilometragem
-        public IActionResult getListVeiculoByKm()
+        public IActionResult GetListVeiculoByKm()
         {
 
             try
@@ -96,14 +96,14 @@ namespace RedeConcessionarias.Controllers
 
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetListVeiculoByKm");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
 
         
         [HttpGet("ListVeiculosVS/")] // Lista os veículos pela versão do sistema
-        public IActionResult getListVeiculoByVS()
+        public IActionResult GetListVeiculoByVS()
         {
 
             try
@@ -118,7 +118,7 @@ namespace RedeConcessionarias.Controllers
 
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetListVeiculoByVS");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
@@ -139,7 +139,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"PostVeiculo");
                 return StatusCode(500,"Erro no Servidor");
             }
             
@@ -166,7 +166,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"PutVeiculo");
                 return StatusCode(500,"Erro no Servidor");
             }
             
@@ -175,17 +175,28 @@ namespace RedeConcessionarias.Controllers
         [HttpDelete("{VeiculoId}")]
         public IActionResult DeleteVeiculo(int VeiculoId)
         {
-            using(var _context = new RedeConcessionariaContext())
+            try
             {
-                var entity = _context.Veiculos.Find(VeiculoId);
-                if(entity == null)
+                using(var _context = new RedeConcessionariaContext())
                 {
-                    return BadRequest("Veículo não encontrado.");
+                    var entity = _context.Veiculos.Find(VeiculoId);
+                    if(entity == null)
+                    {
+                        return BadRequest("Veículo não encontrado.");
+                    }
+                        _context.Veiculos.Remove(entity);
+                        _context.SaveChanges();
+                        return Ok("Veículo Removido");
                 }
-                    _context.Veiculos.Remove(entity);
-                    _context.SaveChanges();
-                    return Ok("Veículo Removido");
             }
+            catch (Exception ex)
+            {
+                
+                Logger.AdicionaLog(ex.Message,1,"DeleteVeiculo");
+                return StatusCode(500,"Erro no Servidor");
+            }
+            
+            
         }
     }
 }

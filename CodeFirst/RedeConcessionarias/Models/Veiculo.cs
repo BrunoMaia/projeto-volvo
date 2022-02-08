@@ -9,10 +9,7 @@ namespace RedeConcessionarias.Models
     public class Veiculo
     {
 
-        public Veiculo()
-        {
-            Vendas = new Collection<Venda>();
-        }
+        
       
         [Key]
         public int VeiculoId { get; set; }
@@ -35,6 +32,12 @@ namespace RedeConcessionarias.Models
         public decimal VersaoSistVeiculo { get; set; } 
 
         public ICollection<Venda>? Vendas { get; set; }
+
+
+        public Veiculo()
+        {
+            Vendas = new Collection<Venda>();
+        }
 
     }
 }

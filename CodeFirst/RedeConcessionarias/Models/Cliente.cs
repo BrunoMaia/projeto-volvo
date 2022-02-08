@@ -7,13 +7,10 @@ using Microsoft.EntityFrameworkCore;
 namespace RedeConcessionarias.Models
 {
     
-    public class Cliente
+    
+public class Cliente
     {
-        public Cliente()
-        {
-            Vendas = new Collection<Venda>();
-        }
-
+        
         
         public int ClienteId { get; set; }
         public string? NomeCliente { get; set; } 
@@ -32,5 +29,10 @@ namespace RedeConcessionarias.Models
         
         public ICollection<Venda> Vendas { get; set; }
 
+
+        public Cliente()
+        {
+            Vendas = new Collection<Venda>();
+        }
     }
 }

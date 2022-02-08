@@ -15,7 +15,7 @@ namespace RedeConcessionarias.Controllers
     {
 
         [HttpGet]
-        public IActionResult getTodosVendedores() //Lista todos os vendedores da empresa
+        public IActionResult GetTodosVendedores() //Lista todos os vendedores da empresa
         {
             try
             {
@@ -27,7 +27,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetTodosVendedores");
                 return StatusCode(500,"Erro no Servidor");
             }
             
@@ -35,7 +35,7 @@ namespace RedeConcessionarias.Controllers
     
         [HttpGet("byId/{VendedorId}")] // Busca o vendedor pela matrícula
 
-        public IActionResult getVendedorByMatricula(int VendedorId)
+        public IActionResult GetVendedorByMatricula(int VendedorId)
         {
             try
             {
@@ -53,14 +53,14 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetVendedorByMatricula");
                 return StatusCode(500,"Erro no Servidor");
             }
             
         }
 
         [HttpGet("vendasId")]
-        public IActionResult GetVendasVendedor (int VendedorId) { //Lista a venda que o veiculo participou por seu Id
+        public IActionResult GetVendasVendedor (int VendedorId) { //Lista as vendas que o vendedor participou
                 try{
                     using(var _context = new RedeConcessionariaContext()){
 
@@ -74,13 +74,13 @@ namespace RedeConcessionarias.Controllers
                     }
                 }
                 catch (Exception ex){
-                    Logger.AdicionaLog(ex.Message,1,"GetTodosVendedores");
+                    Logger.AdicionaLog(ex.Message,1,"GetVendasVendedor");
                     return StatusCode(500,"Erro no Servidor");
                 }
         }
 
         [HttpGet("byCpfVendedor/{CpfVendedor}")]
-        public IActionResult getVendedorByCPF(string CpfVendedor)
+        public IActionResult GetVendedorByCPF(string CpfVendedor)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetVendedorByCPF");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
@@ -117,7 +117,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"PostVendedor");
                 return StatusCode(500,"Erro no Servidor");
             }
 
@@ -143,7 +143,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"PutVendedor");
                 return StatusCode(500,"Erro no Servidor");
             }
             
@@ -168,7 +168,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-               Logger.AdicionaLog(ex.Message,1,"PostCliente");
+               Logger.AdicionaLog(ex.Message,1,"DeleteVendedor");
                     return StatusCode(500,"Erro no Servidor");
             }
         }
