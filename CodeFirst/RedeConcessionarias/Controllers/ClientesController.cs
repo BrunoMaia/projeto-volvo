@@ -94,7 +94,7 @@ namespace RedeConcessionarias.Controllers
                 }
             }
             catch (Exception ex){
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"PutCliente");
                 return StatusCode(500,"Erro no Servidor");
             }
 
@@ -120,7 +120,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"DeleteCliente");
                 return StatusCode(500,"Erro no Servidor");
             }
         }

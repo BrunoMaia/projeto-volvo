@@ -1,6 +1,7 @@
 using System.IO;
 using System;
 
+
 namespace RedeConcessionarias.Log{
     static public class Logger{
         static public bool AdicionaLog(string Mensagem,int Gravidade,string FuncaoRaiz,string Observacao=""){

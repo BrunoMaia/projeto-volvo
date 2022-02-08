@@ -18,7 +18,7 @@ namespace RedeConcessionarias.Controllers
 
         
         [HttpGet]
-        public IActionResult getTodasVendas() //Lista todas as vendas da empresa
+        public IActionResult GetTodasVendas() //Lista todas as vendas da empresa
         {
             try
             {
@@ -31,7 +31,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-               Logger.AdicionaLog(ex.Message,1,"PostCliente");
+               Logger.AdicionaLog(ex.Message,1,"GetTodasVendas");
                 return StatusCode(500,"Erro no Servidor");
             }
             
@@ -39,7 +39,7 @@ namespace RedeConcessionarias.Controllers
     
         [HttpGet("byId/{VendasId}")] // Busca o vendedor pela matrícula
 
-        public IActionResult getVendasById(int VendasId)
+        public IActionResult GetVendasById(int VendasId)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"GetVendasById");
                 return StatusCode(500,"Erro no Servidor");
             }
         
@@ -68,28 +68,41 @@ namespace RedeConcessionarias.Controllers
         public  IActionResult PostVenda([FromBody] Venda venda) //Cadastra a venda no banco de dados
         {
             try
-            {
+           {
                 using (var _context = new RedeConcessionariaContext())
                 {
                     _context.Vendas.Update(venda);
-                    _context.SaveChanges();
-               
 
+
+                    var validaVeiculo = _context.Vendas.Where(v =>  v.VeiculoId == venda.VeiculoId); // verifica se aquele veículo já foi vendido anteriormente
+                    
+                    if ( validaVeiculo.FirstOrDefault() != null) //Se já foi vendido, impede a venda
+                    {
+                        return BadRequest("Este veículo já foi vendido.");
+                    }
+
+                    _context.SaveChanges(); //Cadastra os dados 
+               
+                    //faz uma query usando join para verificar na tabela de veículos qual é o valor do veículo vendido
                    var valor =  (from va in _context.Veiculos 
 					            join vb in _context.Vendas
 					            on va.VeiculoId equals vb.VeiculoId
 					            where vb.VendasId == (from venda in _context.Vendas select venda.VendasId).Max()
 					            select new {valornegocio = va.ValorVeiculo}).Select(t => t.valornegocio);
 
-                    Venda vendazerado = _context.Vendas.Single(v => v.VendasId == venda.VendasId);
-                    vendazerado.ValorVenda = valor.First();
+                    Venda veiculoNegociado = _context.Vendas.Single(v => v.VendasId == venda.VendasId);
+                    veiculoNegociado.ValorVenda = valor.First(); //atualiza na tabela de vendas o valor da venda
 
-                    Vendedor vendedor = _context.Vendedores.Where(n => n.VendedorId == venda.VendedorId).First();
+                    Vendedor vendedor = _context.Vendedores.Where(n => n.VendedorId == venda.VendedorId).First(); 
                     Veiculo veiculo = _context.Veiculos.Where(n => n.VeiculoId == venda.VeiculoId).First();
                     Cliente cliente = _context.Clientes.Where(n => n.ClienteId == venda.ClienteId).First();
 
-                    vendedor.VendasMesVendedor += valor.First();
+                    vendedor.VendasMesVendedor += valor.First(); //atualiza os valores do vendedor que fez a venda
                     vendedor.SalarioVendedor += valor.First()*0.01; 
+
+                    _context.SaveChanges(); // Cadastra os dados para permitir a atualização dos valores do vendedor, pois será necessário o valor atualizado no método DestaqueDoMês()
+                   
+                   Vendedor.DestaqueDoMes(vendedor); //Chama o método para verificar se essa venda impulsionou o vendedor para o destaque do mês
                         
                     _context.SaveChanges();
                     return Ok(venda);
@@ -97,8 +110,8 @@ namespace RedeConcessionarias.Controllers
                 
             }
             catch (Exception ex)
-            {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+           {
+                Logger.AdicionaLog(ex.Message,1,"PostVenda");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
@@ -109,21 +122,22 @@ namespace RedeConcessionarias.Controllers
             try
             {
                 using(var _context = new RedeConcessionariaContext())
-                {
-                    var entity = _context.Vendas.Find(VendasId);
+                {                   
+
+                    var entity = _context.Vendas.Find(VendasId); //Verifica se aquela venda existe no banco de dados
                     if(entity == null)
                     {
                         return BadRequest("Venda não localizada.");
                     }
-                        _context.Entry(entity).CurrentValues.SetValues(venda);
-                        _context.SaveChanges();
+                    _context.Entry(entity).CurrentValues.SetValues(venda); //faz a atualização para os novos valores
+                    _context.SaveChanges();
                         return Ok(venda);
                 }
                 
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"PutVenda");
                 return StatusCode(500,"Erro no Servidor");
             }
         
@@ -150,7 +164,7 @@ namespace RedeConcessionarias.Controllers
             }
             catch (Exception ex)
             {
-                Logger.AdicionaLog(ex.Message,1,"PostCliente");
+                Logger.AdicionaLog(ex.Message,1,"DeleteVenda");
                 return StatusCode(500,"Erro no Servidor");
             }
 
