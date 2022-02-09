@@ -9,78 +9,55 @@ using System.Linq;
 
 
 
-namespace RedeConcessionarias.Controllers
-{
+namespace RedeConcessionarias.Controllers{
     [Route("api/[controller]")]
     [ApiController]
-    public class VendaController : ControllerBase
-    {
-
-        
+    public class VendaController : ControllerBase{
         [HttpGet]
-        public IActionResult GetTodasVendas() //Lista todas as vendas da empresa
-        {
-            try
-            {
-                
-                using(var _context = new RedeConcessionariaContext())
-                {
+        public IActionResult GetTodasVendas(){
+            /* Lista todas as vendas da empresa */
+            try{
+                using(var _context = new RedeConcessionariaContext()){
                     return Ok(_context.Vendas.ToList());
                 }
-            
             }
-            catch (Exception ex)
-            {
-               Logger.AdicionaLog(ex.Message,1,"GetTodasVendas");
+            catch (Exception ex){
+                Logger.AdicionaLog(ex.Message,1,"GetTodasVendas");
                 return StatusCode(500,"Erro no Servidor");
             }
-            
         }
     
-        [HttpGet("byId/{VendasId}")] // Busca o vendedor pela matrícula
-
-        public IActionResult GetVendasById(int VendasId)
-        {
-            try
-            {
-                using(var _context = new RedeConcessionariaContext())
-                {
-
+        [HttpGet("byId/{VendasId}")] 
+        public IActionResult GetVendasById(int VendasId){
+            /* Busca o vendedor pela matrícula */
+            try{
+                using(var _context = new RedeConcessionariaContext()){
                     var venda = _context.Vendas.FirstOrDefault(v=>v.VendasId == VendasId);
-                    if(venda == null)
-                    {
+                    if(venda == null){
                         return NotFound("Venda não localizada.");
                     }
                     return Ok(venda);
                 }
                 
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 Logger.AdicionaLog(ex.Message,1,"GetVendasById");
                 return StatusCode(500,"Erro no Servidor");
             }
         
         }
 
-
         [HttpPost]
-        public  IActionResult PostVenda([FromBody] Venda venda) //Cadastra a venda no banco de dados
-        {
-            try
-           {
-                using (var _context = new RedeConcessionariaContext())
-                {
+        public  IActionResult PostVenda([FromBody] Venda venda){
+            /* Cadastra a venda no banco de dados */
+            try{
+                using (var _context = new RedeConcessionariaContext()){
                     _context.Vendas.Update(venda);
-
-
-                    var validaVeiculo = _context.Vendas.Where(v =>  v.VeiculoId == venda.VeiculoId); // verifica se aquele veículo já foi vendido anteriormente
-                    
-                    if ( validaVeiculo.FirstOrDefault() != null) //Se já foi vendido, impede a venda
-                    {
+                    // verifica se aquele veículo já foi vendido anteriormente
+                    var validaVeiculo = _context.Vendas.Where(v =>  v.VeiculoId == venda.VeiculoId); 
+                    if ( validaVeiculo.FirstOrDefault() != null){
                         return BadRequest("Este veículo já foi vendido.");
                     }
-
                     _context.SaveChanges(); //Cadastra os dados 
                
                     //faz uma query usando join para verificar na tabela de veículos qual é o valor do veículo vendido
@@ -109,65 +86,49 @@ namespace RedeConcessionarias.Controllers
                }
                 
             }
-            catch (Exception ex)
-           {
+            catch (Exception ex){
                 Logger.AdicionaLog(ex.Message,1,"PostVenda");
                 return StatusCode(500,"Erro no Servidor");
             }
         }
 
         [HttpPut("{VendasId}")]
-        public IActionResult PutVenda(int VendasId, [FromBody] Venda venda)
-        {
-            try
-            {
-                using(var _context = new RedeConcessionariaContext())
-                {                   
-
+        public IActionResult PutVenda(int VendasId, [FromBody] Venda venda){
+            /* altera a venda */
+            try{
+                using(var _context = new RedeConcessionariaContext()){                   
                     var entity = _context.Vendas.Find(VendasId); //Verifica se aquela venda existe no banco de dados
-                    if(entity == null)
-                    {
+                    if(entity == null){
                         return BadRequest("Venda não localizada.");
                     }
                     _context.Entry(entity).CurrentValues.SetValues(venda); //faz a atualização para os novos valores
                     _context.SaveChanges();
                         return Ok(venda);
                 }
-                
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 Logger.AdicionaLog(ex.Message,1,"PutVenda");
                 return StatusCode(500,"Erro no Servidor");
             }
-        
         }
 
         [HttpDelete("{VendasId}")]
-        public IActionResult DeleteVenda(int VendasId)
-        {
-            try
-            {
-                using(var _context = new RedeConcessionariaContext())
-                {
+        public IActionResult DeleteVenda(int VendasId){
+            try{
+                using(var _context = new RedeConcessionariaContext()){
                     var entity = _context.Vendas.Find(VendasId);
-                    if(entity == null)
-                    {
+                    if(entity == null){
                         return BadRequest("Venda não localizada.");
                     }
-
                         _context.Vendas.Remove(entity);
                         _context.SaveChanges();
                         return Ok("Venda removida.");
                 }
-            
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 Logger.AdicionaLog(ex.Message,1,"DeleteVenda");
                 return StatusCode(500,"Erro no Servidor");
             }
-
         }
     }
 }

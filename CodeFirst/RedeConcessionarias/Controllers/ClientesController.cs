@@ -7,14 +7,13 @@ using RedeConcessionarias.Models;
 using RedeConcessionarias.Log;
 using System.Linq;
 
-namespace RedeConcessionarias.Controllers
-{
+namespace RedeConcessionarias.Controllers{
     [ApiController]
     [Route("api/[controller]")]
     public class ClienteController : ControllerBase{
-        
         [HttpGet]
-        public IActionResult GetTodosClientes() { //Lista todos os Clientes da empresa
+        public IActionResult GetTodosClientes(){ 
+            /* Lista todos os clientes da empresa. Retornando erro 500 se não conseguir concluir */
                 try{
                     using(var _context = new RedeConcessionariaContext()){
                     return Ok(_context.Clientes.ToList());
@@ -27,17 +26,15 @@ namespace RedeConcessionarias.Controllers
         }
 
         [HttpGet("vendasId")]
-        public IActionResult GetVendasClientes(int ClienteId) { //Lista as vendas que o cliente participou por seu Id
+        public IActionResult GetVendasClientes(int ClienteId) {
+            /* Lista as vendas que o cliente participou por seu Id */
                 try{
                     using(var _context = new RedeConcessionariaContext()){
-
-                        var cliente = _context.Clientes.Include(x => x.Vendas).FirstOrDefault(c=>c.ClienteId == ClienteId);
-                    if(cliente == null){
+                        var Cliente = _context.Clientes.Include(x => x.Vendas).FirstOrDefault(c=>c.ClienteId == ClienteId);
+                    if(Cliente == null){
                         return StatusCode(404,"Cliente não encontrado");
                     }
-                    
-                    return Ok(cliente);
-                    
+                    return Ok(Cliente);
                     }
                 }
                 catch (Exception ex){
@@ -45,18 +42,17 @@ namespace RedeConcessionarias.Controllers
                     return StatusCode(500,"Erro no Servidor");
                 }
         }
-            
 
-
-        [HttpGet("byId/{ClienteId}")] // Busca o cliente pelo Id
+        [HttpGet("byId/{ClienteId}")] 
         public IActionResult GetClientesById(int ClienteId){
+            /* Busca o cliente pelo Id */
             try{
                 using(var _context = new RedeConcessionariaContext()){
-                    var cliente = _context.Clientes.FirstOrDefault(c=>c.ClienteId == ClienteId);
-                    if(cliente == null){
+                    var Cliente = _context.Clientes.FirstOrDefault(c=>c.ClienteId == ClienteId);
+                    if(Cliente == null){
                         return StatusCode(404,"Cliente não encontrado");
                     }
-                    return Ok(cliente);
+                    return Ok(Cliente);
                 }
             }
             catch (Exception ex){
@@ -65,13 +61,14 @@ namespace RedeConcessionarias.Controllers
             }
         }
 
-        [HttpPost]//Cadastra o cliente no banco de dados
-        public IActionResult PostCliente([FromBody] Cliente cliente){
+        [HttpPost]
+        public IActionResult PostCliente([FromBody] Cliente Cliente){
+            /* Cadastra o cliente no banco de dados */
             try{
                 using (var _context = new RedeConcessionariaContext()){
-                    _context.Clientes.Add(cliente);
+                    _context.Clientes.Add(Cliente);
                     _context.SaveChanges();
-                    return Ok(cliente);
+                    return Ok(Cliente);
                 }
             }
             catch (Exception ex){ 
@@ -81,45 +78,40 @@ namespace RedeConcessionarias.Controllers
         }
 
         [HttpPut("{ClienteId}")]
-        public IActionResult PutCliente(int ClienteId, [FromBody] Cliente cliente){
+        public IActionResult PutCliente(int ClienteId, [FromBody] Cliente Cliente){
+            /* Altera o cliente cadastrado */
             try{
                 using(var _context = new RedeConcessionariaContext()){
-                    var entity = _context.Clientes.Find(ClienteId);
-                    if(entity == null){
+                    var Entity = _context.Clientes.Find(ClienteId);
+                    if(Entity == null){
                         return BadRequest("Cliente não localizado");
                     }
-                        _context.Entry(entity).CurrentValues.SetValues(cliente);
+                        _context.Entry(Entity).CurrentValues.SetValues(Cliente);
                         _context.SaveChanges();
-                        return Ok(cliente);
+                        return Ok(Cliente);
                 }
             }
             catch (Exception ex){
                 Logger.AdicionaLog(ex.Message,1,"PutCliente");
                 return StatusCode(500,"Erro no Servidor");
             }
-
-        
         }
     
         [HttpDelete("{ClienteId}")]
-        public IActionResult DeleteCliente(int ClienteId)
-        {
-            try
-            {
-                using(var _context = new RedeConcessionariaContext())
-                {
-                    var entity = _context.Clientes.Find(ClienteId);
-                    if(entity == null)
-                    {
+        public IActionResult DeleteCliente(int ClienteId){
+            /* Apaga o cliente pelo id */
+            try{
+                using(var _context = new RedeConcessionariaContext()){
+                    var Entity = _context.Clientes.Find(ClienteId);
+                    if(Entity == null){
                         return BadRequest("Cliente não localizado.");
                     }
-                        _context.Clientes.Remove(entity);
+                        _context.Clientes.Remove(Entity);
                         _context.SaveChanges();
                         return Ok("Cliente Removido");
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 Logger.AdicionaLog(ex.Message,1,"DeleteCliente");
                 return StatusCode(500,"Erro no Servidor");
             }

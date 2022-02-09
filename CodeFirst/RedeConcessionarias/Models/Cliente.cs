@@ -4,14 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace RedeConcessionarias.Models
-{
-    
-    
-public class Cliente
-    {
-        
-        
+namespace RedeConcessionarias.Models{
+    public class Cliente
+        {
         public int ClienteId { get; set; }
         public string? NomeCliente { get; set; } 
         [MinLength(11,ErrorMessage = "Dados em tamanho inválido."),MaxLength(14,ErrorMessage = "Dados em tamanho inválido.")]
@@ -28,10 +23,7 @@ public class Cliente
         public string? EnderecoClienteComplemento { get; set; }
         
         public ICollection<Venda> Vendas { get; set; }
-
-
-        public Cliente()
-        {
+        public Cliente(){
             Vendas = new Collection<Venda>();
         }
     }

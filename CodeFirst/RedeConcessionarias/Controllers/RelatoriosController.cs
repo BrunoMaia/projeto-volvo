@@ -8,14 +8,13 @@ using RedeConcessionarias.Log;
 using System.Linq;
 using RedeConcessionarias.configurador;
 
-namespace RedeConcessionarias.Controllers
-{
+namespace RedeConcessionarias.Controllers{
     [Route("api/[controller]")]
     [ApiController]
-    public class RelatorioController : ControllerBase
-    {
+    public class RelatorioController : ControllerBase{
         [HttpGet("salarioVendedores")]
         public IActionResult GetSalarioVendedores(){
+            /* Obtem uma tabela com todos os vendedores e seus respectivos salários */
             try{
                 using(var _context = new RedeConcessionariaContext()){
                 var vendedores = _context.Vendedores.ToList();
@@ -25,7 +24,6 @@ namespace RedeConcessionarias.Controllers
                     }
                     _context.SaveChanges();
                     return Ok(vendedores);
-
                 }
             }
             catch (Exception ex){
@@ -35,6 +33,7 @@ namespace RedeConcessionarias.Controllers
         }
         [HttpGet("pagamentoVendedores")]
         public IActionResult GetPagamentoVendedores(){
+            /* Retorna um csv com a folha de pagamento dos vendedores */
             try{
                 using(var _context = new RedeConcessionariaContext()){
                 var Vendedores = _context.Vendedores.ToList();
@@ -42,6 +41,7 @@ namespace RedeConcessionarias.Controllers
                 var Csv = "Cpf; Nome; Venda Total; Salário; Bonus;\n";
                     foreach(Vendedor i in Vendedores){
                         Csv += i.CpfVendedor+";"+i.NomeVendedor+";"+i.VendasMesVendedor+";"+i.SalarioVendedor+";"+i.BonusDestaqueVendedor+";\n";
+                        // Essa parte abaixo apaga os salários do mês dos vendedores e suas vendas
                         // i.SalarioVendedor = Config.ObtemSalario();
                         // i.VendasMesVendedor = 0.0;
                     }
