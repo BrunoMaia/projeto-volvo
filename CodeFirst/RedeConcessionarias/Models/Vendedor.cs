@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using RedeConcessionarias.Log;
+using RedeConcessionarias.configurador;
 using System.Linq;
 
 namespace RedeConcessionarias.Models
@@ -41,7 +42,7 @@ namespace RedeConcessionarias.Models
         {
             this.Vendas = new Collection<Venda>();
             this.VendasMesVendedor = 0;
-            this.SalarioVendedor = 1212;
+            this.SalarioVendedor = Config.ObtemSalario();
             this.DestaqueVendedor = "Não";
             this.BonusDestaqueVendedor = 0;
         }

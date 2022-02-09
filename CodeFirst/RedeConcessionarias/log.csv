@@ -23,3 +23,22 @@ DefineSalario;08/02/2022 16:57:06;3;'A' is an invalid start of a property name. 
 DefineSalario;08/02/2022 17:10:59;3;'A' is an invalid start of a property name. Expected a '"'. LineNumber: 0 | BytePositionInLine: 24.
 DefineSalario;08/02/2022 17:14:14;3;'A' is an invalid start of a property name. Expected a '"'. LineNumber: 0 | BytePositionInLine: 24.
 DefineSalario;08/02/2022 17:14:37;3;The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. LineNumber: 0 | BytePositionInLine: 0.
+GetSalarioVendedores;08/02/2022 20:15:26;1;Unable to cast object of type 'IncludableQueryable`2[RedeConcessionarias.Models.Vendedor,System.Double]' to type 'System.IConvertible'.
+GetSalarioVendedores;08/02/2022 20:56:18;1;The expression 'x.VendasMesVendedor' is invalid inside an 'Include' operation, since it does not represent a property access: 't => t.MyProperty'. To target navigations declared on derived types, use casting ('t => ((Derived)t).MyProperty') or the 'as' operator ('t => (t as Derived).MyProperty'). Collection navigation access can be filtered by composing Where, OrderBy(Descending), ThenBy(Descending), Skip or Take operations. For more information on including related data, see http://go.microsoft.com/fwlink/?LinkID=746393.
+GetSalarioVendedores;08/02/2022 20:57:31;1;Nome de coluna 'VendedorId' inválido.
+Nome de coluna 'BonusDestaqueVendedor' inválido.
+Nome de coluna 'DestaqueVendedor' inválido.
+IniciaWebApi;08/02/2022 20:58:55;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 20:59:56;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:10:57;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:11:57;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:12:36;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:13:25;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:17:03;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:17:11;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:22:32;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:23:56;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 21:55:45;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 22:03:38;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 22:03:49;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.
+IniciaWebApi;08/02/2022 22:08:07;4;Exception of type 'Microsoft.Extensions.Hosting.HostFactoryResolver+HostingListener+StopTheHostException' was thrown.

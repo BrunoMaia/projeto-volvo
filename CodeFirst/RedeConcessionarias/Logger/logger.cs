@@ -5,6 +5,13 @@ using System;
 namespace RedeConcessionarias.Log{
     static public class Logger{
         static public bool AdicionaLog(string Mensagem,int Gravidade,string FuncaoRaiz,string Observacao=""){
+            /* Essa função salva as mensagens de erros em um arquivo de log em formato csv. A gravidade da ocorrência é definida como:
+            1 - Pouco grave/não afeta totalmente o serviço
+            2 - Causa problemas na entrega do serviço
+            3 - Pode deixar o serviço instavél/fora
+            4 - Paraliza totalmente o serviço
+            retorna: true - adicionou ao log, false - não adicionou por ter registrado erro
+            */
             string arquivo = @".\log.csv";
             if (File.Exists(arquivo)){
                 try{

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using RedeConcessionarias.Models;
 using RedeConcessionarias.Log;
 using System.Linq;
+using RedeConcessionarias.configurador;
 
 namespace RedeConcessionarias.Controllers
 {
