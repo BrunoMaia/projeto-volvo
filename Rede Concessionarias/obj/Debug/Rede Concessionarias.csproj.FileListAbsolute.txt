@@ -1,4 +1,0 @@
-C:\Users\Felipe\Desktop\projeto-volvo-Felipe-branch\projeto-volvo-Felipe-branch\Rede Concessionarias\obj\Debug\Rede Concessionarias.csproj.AssemblyReference.cache
-C:\Users\Felipe\Desktop\projeto-volvo-Felipe-branch\projeto-volvo-Felipe-branch\Rede Concessionarias\obj\Debug\Rede Concessionarias.csproj.SuggestedBindingRedirects.cache
-C:\Users\bruno\source\repos\projeto-volvo\Rede Concessionarias\obj\Debug\Rede Concessionarias.csproj.AssemblyReference.cache
-C:\Users\bruno\source\repos\projeto-volvo\Rede Concessionarias\obj\Debug\Rede Concessionarias.csproj.SuggestedBindingRedirects.cache

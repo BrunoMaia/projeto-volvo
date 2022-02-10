@@ -41,9 +41,6 @@ namespace RedeConcessionarias.Controllers{
                 var Csv = "Cpf; Nome; Venda Total; Salário; Bonus;\n";
                     foreach(Vendedor i in Vendedores){
                         Csv += i.CpfVendedor+";"+i.NomeVendedor+";"+i.VendasMesVendedor+";"+i.SalarioVendedor+";"+i.BonusDestaqueVendedor+";\n";
-                        // Essa parte abaixo apaga os salários do mês dos vendedores e suas vendas
-                        // i.SalarioVendedor = Config.ObtemSalario();
-                        // i.VendasMesVendedor = 0.0;
                     }
                     Config.DefineAtualizado();
                     return File(new System.Text.UTF8Encoding().GetBytes(Csv), "text/csv", "Relatorio.csv");
